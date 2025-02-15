@@ -7,3 +7,10 @@
 #endif
 
 #include <Types.h>
+#include <memory>
+#include <string>
+
+// Common containers
+#include <unordered_map>
+
+#include <Util/Logger.h>

@@ -15,7 +15,8 @@ namespace CitrusCore
 			INFO,
 			WARN,
 			ERROR,
-			FATAL
+			FATAL,
+			VERBOSE,
 		};
 
 		static void Log(LogLevel level, const char* format, ...);

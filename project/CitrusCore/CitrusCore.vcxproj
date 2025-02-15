@@ -19,13 +19,23 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\source\Base\Object.h" />
     <ClInclude Include="..\..\source\CitrusCore.h" />
     <ClInclude Include="..\..\source\CCCommon.h" />
+    <ClInclude Include="..\..\source\Geometry\Rect.h" />
+    <ClInclude Include="..\..\source\Interface\IManagedObject.h" />
+    <ClInclude Include="..\..\source\Resources\AResource.h" />
+    <ClInclude Include="..\..\source\Resources\ResourceGroup.h" />
+    <ClInclude Include="..\..\source\Resources\ResourceHandle.h" />
     <ClInclude Include="..\..\source\Types.h" />
+    <ClInclude Include="..\..\source\Util\Config.h" />
+    <ClInclude Include="..\..\source\Util\FileUtil.h" />
     <ClInclude Include="..\..\source\Util\Logger.h" />
+    <ClInclude Include="..\..\source\Util\Property.h" />
     <ClInclude Include="..\..\source\Util\UID.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\source\Util\Config.cpp" />
     <ClCompile Include="..\..\source\Util\Logger.cpp" />
     <ClCompile Include="..\..\source\Util\UID.cpp" />
   </ItemGroup>
@@ -92,6 +102,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(ProjectDir)..\..\libraries\includes;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnabled>true</VcpkgEnabled>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
