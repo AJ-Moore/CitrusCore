@@ -2,13 +2,14 @@
 
 #include <CCCommon.h>
 #include <Resources/ResourceHandle.h>
+#include <Resources/AResource.h>
 
 namespace CitrusCore
 {
 	template <class T>
 	class CITRUS_CORE_API ResourceGroup
 	{
-		static_assert(std::is_base_of<AResource, T>::value, "T must derive from AResource");
+		static_assert(std::is_base_of<AResourceBase, T>::value, "T must derive from AResource");
 	public:
 		std::shared_ptr<ResourceHandle<T>> Get(const std::string& path);
 

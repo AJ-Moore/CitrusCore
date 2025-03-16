@@ -6,7 +6,7 @@
 
 namespace CitrusCore
 {
-	class Config {
+	class CITRUS_CORE_API Config {
 	public:
 		/// Loads the configuration file specified
 		bool LoadConfig(std::string File);

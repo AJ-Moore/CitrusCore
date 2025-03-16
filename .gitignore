@@ -250,3 +250,10 @@ AkavacheSqliteLinkerOverride.cs
 NuGetBuild
 WiX.Toolset.DummyFile.txt
 GitHubVS.sln.DotSettings
+
+.cache/
+CMakeFiles/
+build/
+Makefile
+CMakeCache.txt
+cmake_install.cmake

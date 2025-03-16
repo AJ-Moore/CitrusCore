@@ -7,7 +7,7 @@ namespace CitrusCore
 	template <class T>
 	class CITRUS_CORE_API ResourceHandle
 	{
-		friend class ResourceGroup;
+		//friend class ResourceGroup;
 	public:
 		ResourceHandle() = delete;
 		ResourceHandle(std::string path) { m_path = path; }

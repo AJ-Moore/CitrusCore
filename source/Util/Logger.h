@@ -6,7 +6,7 @@
 
 namespace CitrusCore
 {
-	CITRUS_CORE_API class Logger
+	class CITRUS_CORE_API Logger
 	{
 	public: 
 		enum LogLevel

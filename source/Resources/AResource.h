@@ -4,8 +4,10 @@
 
 namespace CitrusCore
 {
+	class CITRUS_CORE_API AResourceBase{};
+
 	template <class T>
-	class CITRUS_CORE_API AResource
+	class CITRUS_CORE_API AResource : public AResourceBase
 	{
 	public:
 		virtual ~AResource() { }
