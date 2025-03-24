@@ -117,7 +117,7 @@ namespace CitrusCore
 		fStream.open(File.c_str(), std::fstream::out);
 
 		if (fStream.fail()) {
-			CitrusCore::Log(Logger::ERROR, "Unable to write configuration: '%s'", File.c_str());
+			Logger::Log(Logger::ERROR, "Unable to write configuration: '%s'", File.c_str());
 			fStream.close();
 			return false;
 		}

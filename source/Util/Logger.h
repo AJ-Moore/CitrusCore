@@ -27,11 +27,4 @@ namespace CitrusCore
 		void FormatLogMessage(LogLevel level, const std::string& message);
 		LogLevel m_logLevel = LogLevel::DEBUG;
 	};
-
-	extern "C" void Log(Logger::LogLevel level, const char* format, ...) {
-		va_list args;
-		va_start(args, format);
-		Logger::Log(level, format, args);
-		va_end(args);
-	}
 }
