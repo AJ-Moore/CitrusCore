@@ -17,4 +17,7 @@ namespace CitrusCore
 		std::unique_ptr<T> m_resource = nullptr;
 		bool m_bLoaded = false;
 	};
+
+	template <class T>
+	using ResourcePtr = std::shared_ptr<ResourceHandle<T>>;
 }

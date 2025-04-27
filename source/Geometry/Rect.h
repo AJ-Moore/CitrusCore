@@ -26,5 +26,5 @@ namespace CitrusCore
 		T Bottom() { return Height; }
 	};
 
-	CITRUS_CORE_API typedef Rect<> iRect;
+	using Recti = Rect<uint32>;
 }
