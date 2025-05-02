@@ -8,7 +8,14 @@ namespace CitrusCore
 	{
 		va_list args;
 		va_start(args, format);
-		Log(level, format, args);
+		//Log(level, format, args);
+		std::string fString;
+		va_list args2;
+		va_copy(args2, args);
+		fString.resize(vsnprintf(nullptr, 0, format, args2) + 1);
+		va_end(args2);
+		vsnprintf(fString.data(),fString.size(), format, args);
+		Instance().FormatLogMessage(level, fString);
 		va_end(args);
 	}
 
