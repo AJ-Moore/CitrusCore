@@ -45,6 +45,9 @@ std::string logLevelString;
 		case LogLevel::FATAL:
 			logLevelString = "FATAL";
 			break;
+		case VERBOSE:
+			logLevelString = "VERBOSE";
+			break;
 		}
 
 		std::string formattedMessage = logLevelString + ": " + message;

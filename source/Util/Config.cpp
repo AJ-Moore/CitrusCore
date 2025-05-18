@@ -84,7 +84,7 @@ namespace CitrusCore
 					}
 				}
 
-				Property<std::string, std::string> property(key, value);
+				KeyValuePair<std::string, std::string> property(key, value);
 
 				if (bGroupProperty)
 				{
@@ -176,19 +176,19 @@ namespace CitrusCore
 
 	void Config::SetString(std::string property, std::string value)
 	{
-		m_properties.push_back(Property<std::string, std::string>(property, value));
+		m_properties.push_back(KeyValuePair<std::string, std::string>(property, value));
 	}
 
 	void Config::SetGroupProperty(std::string group, std::string property, std::string value)
 	{
-		m_propertyGroup[group].push_back(Property<std::string, std::string>(property, value));
+		m_propertyGroup[group].push_back(KeyValuePair<std::string, std::string>(property, value));
 	}
 
 	std::vector<std::string> Config::GetProperties(std::string PropertyName)
 	{
 		std::vector<std::string> _return;
 
-		std::vector<Property<std::string, std::string>>::iterator iter;
+		std::vector<KeyValuePair<std::string, std::string>>::iterator iter;
 
 		for (iter = m_properties.begin(); iter != m_properties.end(); ++iter) {
 			if (iter->key == PropertyName) {
@@ -199,14 +199,14 @@ namespace CitrusCore
 		return _return;
 	}
 
-	std::vector<Property<std::string, std::string>> Config::GetGroupProperties(std::string PropertyGroup)
+	std::vector<KeyValuePair<std::string, std::string>> Config::GetGroupProperties(std::string PropertyGroup)
 	{
 		if (m_propertyGroup.find(PropertyGroup) != m_propertyGroup.end())
 		{
 			return m_propertyGroup[PropertyGroup];
 		}
 
-		return std::vector<Property<std::string, std::string>>();
+		return std::vector<KeyValuePair<std::string, std::string>>();
 	}
 
 	std::vector<std::string> Config::GetGroupPropertiesValues(std::string PropertyGroup)
@@ -238,7 +238,7 @@ namespace CitrusCore
 
 	sint32 Config::GetInt(std::string PropertyName, int defaultValue)
 	{
-		std::vector<Property<std::string, std::string>>::iterator iter;
+		std::vector<KeyValuePair<std::string, std::string>>::iterator iter;
 		std::string _val;
 
 		bool bFound = false;

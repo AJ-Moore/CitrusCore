@@ -1,8 +1,8 @@
 #pragma once 
 
 #include <CCCommon.h>
-#include <Util/Property.h>
 #include <vector>
+#include <Util/KeyValuePair.h>
 
 namespace CitrusCore
 {
@@ -29,7 +29,7 @@ namespace CitrusCore
 		std::vector<std::string> GetProperties(std::string PropertyName);
 
 		/// Returns a vextor of properties for the given group 
-		std::vector<Property<std::string, std::string>> GetGroupProperties(std::string PropertyGroup);
+		std::vector<KeyValuePair<std::string, std::string>> GetGroupProperties(std::string PropertyGroup);
 
 		/// Returns all the values for a property group, required by cube maps currently
 		std::vector<std::string> GetGroupPropertiesValues(std::string PropertyGroup);
@@ -47,10 +47,10 @@ namespace CitrusCore
 
 	private:
 		/// Holds all the properties loaded by loadConfig( ... )
-		std::vector<Property<std::string, std::string>> m_properties;
+		std::vector<KeyValuePair<std::string, std::string>> m_properties;
 
 		/// Property group/s, key = String group identifier, value = array of groups properties.
-		typedef std::unordered_map<std::string, std::vector<Property<std::string, std::string>>> PropertyGroup;
+		typedef std::unordered_map<std::string, std::vector<KeyValuePair<std::string, std::string>>> PropertyGroup;
 		PropertyGroup m_propertyGroup;
 	};
 }

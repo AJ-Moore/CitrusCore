@@ -6,7 +6,7 @@
 namespace CitrusCore
 {
 	/** Base object class. */
-	class CITRUS_CORE_API Object : protected IManagedObject
+	class CITRUS_CORE_API Object
 	{
 	public:
 		virtual ~Object(){}

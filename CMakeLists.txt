@@ -9,6 +9,12 @@ project(CitrusCore CXX)
 # Set C++17 standard
 set(CMAKE_CXX_STANDARD 20)
 
+# add dependencies
+include(cmake/CPM.cmake)
+
+# GLM
+CPMAddPackage("gh:g-truc/glm#1.0.1")
+
 # Add the include directory as the root for the source directory
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/source")
 
@@ -20,6 +26,10 @@ file(GLOB_RECURSE SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp")
 
 # If you're creating a library, use add_library instead of add_executable
 add_library(CitrusCore ${SOURCES})
+
+target_link_libraries(CitrusCore PRIVATE
+    glm::glm
+)
 
 target_include_directories(CitrusCore PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/source)
 #target_include_directories(CitrusCore PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/source>)
