@@ -25,6 +25,7 @@ namespace CitrusCore
     private:
         std::vector<uint8> m_byteStream;
         int m_byteIndex = 0;
+        int m_readIndex = 0;
     };
 
     template <class T>

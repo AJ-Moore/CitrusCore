@@ -111,12 +111,17 @@ namespace CitrusCore
 		/// Event broadcaster, listeners called when transform is updated.
 		Event<Transform*> OnTransformChanged;
 
+		virtual void Serialise(ByteStream& byteStream) override;
+        virtual void Deserialise(ByteStreamReader& byteStream) override;
+
 	protected:
 		/// Calculates the local transformation matrix from the position, rotation and scale
 		void UpdateLocalTransform();
 
 		/// Called to recalculate the absolute transformation within the world
 		void UpdateGlobalTransform();
+
+		std::shared_ptr<ITimestampProvider> GetTimestampProvider() const { return m_timestampProvider; }
 
 	private:
 		/// Vec3 position 

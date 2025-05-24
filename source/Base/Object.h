@@ -1,6 +1,5 @@
 #pragma once
 
-#include <Interface/IManagedObject.h>
 #include <Util/UID.h>
 
 namespace CitrusCore

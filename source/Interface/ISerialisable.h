@@ -2,6 +2,7 @@
 
 #include <CCCommon.h>
 #include <Serialisation/ByteStream.h>
+#include <Serialisation/ByteStreamReader.h>
 
 namespace CitrusCore
 {
@@ -9,6 +10,6 @@ namespace CitrusCore
 	public:
         virtual ~ISerialisable() = default;
         virtual void Serialise(ByteStream& byteStream) = 0;
-        virtual void Deserialise(ByteStream& byteStream) = 0;
+        virtual void Deserialise(ByteStreamReader& byteStream) = 0;
 	};
 }

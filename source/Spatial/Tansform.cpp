@@ -234,6 +234,7 @@ namespace CitrusCore
 				m_worldPosition = glm::vec3(m_globalTransform[3]);
 				m_bDirty = false; 
 				OnTransformChanged.Invoke(this);
+
 				return;
 			}
 
@@ -245,5 +246,26 @@ namespace CitrusCore
 			m_bDirty = false;
 		}
 
+	}
+
+	void Transform::Serialise(ByteStream& byteStream)
+	{
+		for (int i = 0; i < 4; ++i)
+		{
+			for (int p = 0; p < 4; ++p)
+			{
+				byteStream.WriteFloat(m_localTransform[i][p]);
+			}
+		}
+	}
+
+	void Transform::Deserialise(ByteStreamReader& byteStreamReader){
+		for (int i = 0; i < 4; ++i)
+		{
+			for (int p = 0; p < 4; ++p)
+			{
+				m_localTransform[i][p] = byteStreamReader.ReadFloat();
+			}
+		}
 	}
 }
