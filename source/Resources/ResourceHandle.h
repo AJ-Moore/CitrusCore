@@ -2,6 +2,7 @@
 
 #include <Resources/AResource.h>
 #include <CCCommon.h>
+#include <memory>
 
 namespace CitrusCore
 {
@@ -19,11 +20,12 @@ namespace CitrusCore
 		ResourceHandle(std::string path) { m_path = path; }
 		T* GetResource() { return m_resource.get(); }
 	protected:
-		virtual void Load(); 
+		template<class P>
+		void Load(); 
 		virtual void Unload();
 	private: 
 		std::string m_path;
-		std::unique_ptr<T> m_resource = nullptr;
+		std::shared_ptr<T> m_resource = nullptr;
 		bool m_bLoaded = false;
 	};
 
@@ -31,9 +33,11 @@ namespace CitrusCore
 	using ResourcePtr = std::shared_ptr<ResourceHandle<T>>;
 
 	template<class T>
+	template<class P>
 	void ResourceHandle<T>::Load() 
 	{
-		AResource<T>* resource = (AResource<T>*)GetResource();
+		m_resource = std::static_pointer_cast<T>(std::make_shared<P>());
+		AResource<T>* resource = static_cast<AResource<T>*>(GetResource());
 		resource->LoadResource(m_path);
 	}
 

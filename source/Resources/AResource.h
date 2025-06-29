@@ -20,13 +20,19 @@ namespace CitrusCore
 	{
 		friend class ResourceHandle<T>;
 	public:
-		virtual ~AResource() { UnloadResource(); }
+		virtual ~AResource();
 		const std::string& GetResourceLocation() { return m_resourceLocation; }
 	protected:
 		virtual bool LoadResource(std::string path) override = 0;
-		virtual void UnloadResource() override = 0;
+		virtual void UnloadResource() override{};
 		virtual void SetResourceLocation(const std::string& path) override final { m_resourceLocation = path; }
 	private:
 		std::string m_resourceLocation;
 	};
+
+	template <class T>
+	AResource<T>::~AResource()
+	{
+		UnloadResource();
+	}
 }
