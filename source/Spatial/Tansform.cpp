@@ -123,7 +123,7 @@ namespace CitrusCore
 
 	glm::vec3 Transform::GetRight()
 	{
-		return glm::cross(GetForward(), GetUp());
+		return glm::cross( GetUp(),GetForward());
 	}
 
 	glm::vec3 Transform::GetUp()

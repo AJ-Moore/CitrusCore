@@ -4,6 +4,7 @@
 #include "Interface/ITimestampProvider.h"
 #include <Base/Object.h>
 #include <CCCommon.h>
+#include <glm/fwd.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <glm/common.hpp>
@@ -125,22 +126,22 @@ namespace CitrusCore
 
 	private:
 		/// Vec3 position 
-		glm::vec3 m_position;
+		glm::vec3 m_position = glm::vec3(0.0f);
 
 		/// World position 
-		glm::vec3 m_worldPosition;
+		glm::vec3 m_worldPosition = glm::vec3(0.0f);
 
 		/// The transforms rotation as a quaternion
-		glm::quat m_rotation;
+		glm::quat m_rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
 
 		/// The transforms scale 
 		glm::vec3 m_scale;
 
 		/// The local transformation matrix, relative to parent
-		glm::mat4 m_localTransform;
+		glm::mat4 m_localTransform = glm::mat4(1.0f);
 
 		/// The global transformation matrix, absolute position in world ( World Matrix ) 
-		glm::mat4 m_globalTransform;
+		glm::mat4 m_globalTransform = glm::mat4(1.0f);;
 
 		/// Datestamp when this transform was last calulcated, using the time this frame was started
 		/// Used to determine if the trasform has already been calculated for the current frame

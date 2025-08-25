@@ -25,7 +25,7 @@ file(GLOB_RECURSE SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp")
 # add_executable(MyProject ${SOURCES})
 
 # If you're creating a library, use add_library instead of add_executable
-add_library(CitrusCore ${SOURCES})
+add_library(CitrusCore SHARED ${SOURCES})
 
 target_link_libraries(CitrusCore PRIVATE
     glm::glm
