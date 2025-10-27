@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Interface/ISerialisable.h"
-#include "Interface/ITimestampProvider.h"
+#include <Interface/ISerialisable.h>
+#include <Interface/ITimestampProvider.h>
 #include <Base/Object.h>
 #include <CCCommon.h>
 #include <glm/fwd.hpp>
