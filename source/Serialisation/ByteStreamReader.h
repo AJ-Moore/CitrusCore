@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Interface/ISerialisable.h>
 #include <CCCommon.h>
 #include <Types.h>
 #include <cstddef>
@@ -7,7 +8,7 @@
 
 namespace CitrusCore 
 {
-    class CITRUS_CORE_API ByteStreamReader
+    class CITRUS_CORE_API ByteStreamReader : StreamReader
     {
     public:
         ByteStreamReader() = delete;

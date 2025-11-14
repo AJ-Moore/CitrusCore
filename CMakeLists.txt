@@ -15,6 +15,9 @@ include(cmake/CPM.cmake)
 # GLM
 CPMAddPackage("gh:g-truc/glm#1.0.1")
 
+# Nameof for reflection
+CPMAddPackage("gh:neargye/nameof#v0.10.4")
+
 # Add the include directory as the root for the source directory
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/source")
 
@@ -29,6 +32,7 @@ add_library(CitrusCore SHARED ${SOURCES})
 
 target_link_libraries(CitrusCore PRIVATE
     glm::glm
+    nameof
 )
 
 target_include_directories(CitrusCore PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/source)

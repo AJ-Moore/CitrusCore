@@ -5,10 +5,11 @@
 #include <cstddef>
 #include <cstring>
 #include <vector>
+#include <Serialisation/SerialiserContext.h>
 
 namespace CitrusCore 
 {
-    class CITRUS_CORE_API ByteStream 
+    class CITRUS_CORE_API ByteStreamWriter : public StreamWriter
     {
     public:
         void Reserve(long int sizeInBytes);
@@ -19,9 +20,9 @@ namespace CitrusCore
 
         //void WriteUnsigned(uint64 value, int bytes);
         //void WriteSigned(sint64 value, int bytes);
-        void WriteString(std::string value);
-        void WriteBool(bool value);
-        void WriteFloat(float value);
+        virtual void WriteString(std::string value);
+        virtual void WriteBool(bool value);
+        virtual void WriteFloat(float value);
     private:
         std::vector<uint8> m_byteStream;
         int m_byteIndex = 0;
@@ -30,7 +31,7 @@ namespace CitrusCore
 
     template <class T>
     std::enable_if<std::is_integral<T>::value, void>
-    ByteStream::WriteInt(T value)
+    ByteStreamWriter::WriteInt(T value)
     {
         size_t sizeInBytes = sizeof(T);
 

@@ -112,7 +112,7 @@ namespace CitrusCore
 		/// Event broadcaster, listeners called when transform is updated.
 		Event<Transform*> OnTransformChanged;
 
-		virtual void Serialise(ByteStream& byteStream) override;
+		virtual void Serialise(ByteStreamWriter& byteStream) override;
         virtual void Deserialise(ByteStreamReader& byteStream) override;
 
 	protected:

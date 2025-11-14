@@ -4,7 +4,7 @@
 
 namespace CitrusCore
 {
-    void ByteStream::WriteString(std::string value)
+    void ByteStreamWriter::WriteString(std::string value)
     {
         if (!value.size())
         {
@@ -24,7 +24,7 @@ namespace CitrusCore
         m_byteIndex += sizeInBytes;
     }
     
-    void ByteStream::WriteBool(bool value)
+    void ByteStreamWriter::WriteBool(bool value)
     {
         if (m_byteIndex + sizeof(bool) >= m_byteStream.capacity())
         {
@@ -35,7 +35,7 @@ namespace CitrusCore
         m_byteIndex++;
     }
 
-    void ByteStream::WriteFloat(float value)
+    void ByteStreamWriter::WriteFloat(float value)
     {
         if (m_byteIndex + sizeof(float) >= m_byteStream.capacity())
         {

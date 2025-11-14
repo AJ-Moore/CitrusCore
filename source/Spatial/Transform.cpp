@@ -1,8 +1,6 @@
-#include "Interface/ITimestampProvider.h"
+#include <Interface/ITimestampProvider.h>
 #include <Spatial/Transform.h>
 #include <memory>
-//#include "../Core/UServiceLocator.h"
-//#include "../Entity/UEntity.h"
 
 namespace CitrusCore
 {
