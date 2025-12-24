@@ -1,10 +1,10 @@
-#include <Serialisation/ByteStream.h>
+#include <Serialisation/ByteStreamWriter.h>
 #include <cstddef>
 #include <cstring>
 
 namespace CitrusCore
 {
-    void ByteStreamWriter::WriteString(std::string value)
+    void ByteStreamWriter::Write(const std::string& key, std::string value)
     {
         if (!value.size())
         {
@@ -24,7 +24,7 @@ namespace CitrusCore
         m_byteIndex += sizeInBytes;
     }
     
-    void ByteStreamWriter::WriteBool(bool value)
+    void ByteStreamWriter::Write(const std::string& key, bool value)
     {
         if (m_byteIndex + sizeof(bool) >= m_byteStream.capacity())
         {
@@ -35,7 +35,7 @@ namespace CitrusCore
         m_byteIndex++;
     }
 
-    void ByteStreamWriter::WriteFloat(float value)
+    void ByteStreamWriter::Write(const std::string&, float value)
     {
         if (m_byteIndex + sizeof(float) >= m_byteStream.capacity())
         {
@@ -44,5 +44,15 @@ namespace CitrusCore
 
         std::memcpy(&m_byteStream[m_byteIndex], &value, sizeof(float));
         m_byteIndex += sizeof(float);
+    }
+
+    void ByteStreamWriter::Write(const std::string& key, uint64 value)
+    {
+        WriteInt(value);
+    }
+
+    void ByteStreamWriter::Write(const std::string& key, sint64 value)
+    {
+        WriteInt(value);
     }
 }

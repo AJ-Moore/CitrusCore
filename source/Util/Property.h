@@ -22,8 +22,8 @@ namespace CitrusCore
     public:
         ~PropertyBase() = default;
         PropertyBase() = default;
-        virtual void Serialise(ByteStreamWriter& byteStream) override {}
-        virtual void Deserialise(ByteStreamReader& byteStream) override {}
+        virtual void Serialise(StreamWriter& byteStream) override {}
+        virtual void Deserialise(StreamReader& byteStream) override {}
         bool IsReadOnly() const { return m_bReadOnly; }
     protected:
         std::string m_name;

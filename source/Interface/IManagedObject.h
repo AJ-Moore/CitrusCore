@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Interface/IInitialisable.h"
-#include "Interface/IRenderable.h"
-#include "Interface/IUpdateable.h"
+#include <Interface/IInitialisable.h>
+#include <Interface/IRenderable.h>
+#include <Interface/IUpdateable.h>
 #include <CCCommon.h>
 
 namespace CitrusCore

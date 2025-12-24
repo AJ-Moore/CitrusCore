@@ -1,8 +1,8 @@
 #pragma once
 
 #include <CCCommon.h>
-#include <Serialisation/SerialiserContext.h>
-#include <Serialisation/ByteStream.h>
+#include <Serialisation/Stream.h>
+#include <Serialisation/ByteStreamWriter.h>
 #include <Serialisation/ByteStreamReader.h>
 
 namespace CitrusCore

@@ -31,6 +31,10 @@ namespace CitrusCore
 		template <auto Member>
 		requires std::is_member_object_pointer_v<decltype(Member)>
 		auto* GetProperty();
+
+		template <auto Member, class T>
+		requires std::is_member_object_pointer_v<decltype(Member)>
+		auto GetPropertyLit(T* obj);
 	private:
 		UID m_uid;
 		std::string m_name = "Object";
@@ -80,6 +84,26 @@ namespace CitrusCore
 			return static_cast<ReadOnlyPropertyT<ClassType,FieldType,Member>*>(found->second.get());
 		} else if constexpr (std::is_base_of<PropertyDefinitionBase, FieldType>::value) {
 			return static_cast<PropertyT<ClassType,FieldType,Member>*>(found->second.get());
+		}
+		else {
+			static_assert(false, "Property must be wrapped by Property or ReadOnlyProperty.");
+		}
+	}
+
+	template <auto Member, class T>
+	requires std::is_member_object_pointer_v<decltype(Member)>
+	auto Object::GetPropertyLit(T* obj)
+	{
+		std::string propertyName = std::string(member_name<Member>);
+
+		using FieldType = typename member_traits<decltype(Member)>::field_type;
+		using ClassType = typename member_traits<decltype(Member)>::class_type;
+
+		if constexpr (std::is_base_of<IPropReadOnly, FieldType>::value)
+		{
+			return ReadOnlyPropertyT<T, FieldType, Member>(obj, Member);
+		} else if constexpr (std::is_base_of<PropertyDefinitionBase, FieldType>::value) {
+			return PropertyT<T, FieldType, Member>(obj, Member);
 		}
 		else {
 			static_assert(false, "Property must be wrapped by Property or ReadOnlyProperty.");

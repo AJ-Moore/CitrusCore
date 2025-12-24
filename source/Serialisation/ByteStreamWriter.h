@@ -5,7 +5,7 @@
 #include <cstddef>
 #include <cstring>
 #include <vector>
-#include <Serialisation/SerialiserContext.h>
+#include <Serialisation/Stream.h>
 
 namespace CitrusCore 
 {
@@ -18,11 +18,11 @@ namespace CitrusCore
         std::enable_if<std::is_integral<T>::value, void>
         WriteInt(T value);
 
-        //void WriteUnsigned(uint64 value, int bytes);
-        //void WriteSigned(sint64 value, int bytes);
-        virtual void WriteString(std::string value);
-        virtual void WriteBool(bool value);
-        virtual void WriteFloat(float value);
+        virtual void Write(const std::string& key, uint64 value) override;
+        virtual void Write(const std::string& key, sint64 value) override;
+        virtual void Write(const std::string& key, std::string value) override;
+        virtual void Write(const std::string& key, bool value) override;
+        virtual void Write(const std::string& key, float value) override;
     private:
         std::vector<uint8> m_byteStream;
         int m_byteIndex = 0;
@@ -40,6 +40,6 @@ namespace CitrusCore
             m_byteStream.resize(m_byteIndex + sizeInBytes);
         }
 
-        std::memcpy(&m_byteStream[m_byteIndex], value, sizeInBytes);
+        std::memcpy(&m_byteStream[m_byteIndex], &value, sizeInBytes);
     }
 }

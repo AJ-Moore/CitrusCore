@@ -1,3 +1,4 @@
+#include "Serialisation/Stream.h"
 #include <Interface/ITimestampProvider.h>
 #include <Spatial/Transform.h>
 #include <memory>
@@ -241,23 +242,25 @@ namespace CitrusCore
 
 	}
 
-	void Transform::Serialise(ByteStream& byteStream)
+	void Transform::Serialise(StreamWriter& byteStream)
 	{
+		byteStream.BeginArray("transform");
 		for (int i = 0; i < 4; ++i)
 		{
 			for (int p = 0; p < 4; ++p)
 			{
-				byteStream.WriteFloat(m_localTransform[i][p]);
+				byteStream.Write("", m_localTransform[i][p]);
 			}
 		}
+		byteStream.EndArray();
 	}
 
-	void Transform::Deserialise(ByteStreamReader& byteStreamReader){
+	void Transform::Deserialise(StreamReader& byteStreamReader){
 		for (int i = 0; i < 4; ++i)
 		{
 			for (int p = 0; p < 4; ++p)
 			{
-				m_localTransform[i][p] = byteStreamReader.ReadFloat();
+				m_localTransform[i][p] = byteStreamReader.ReadFloat("transform", 0);
 			}
 		}
 	}
