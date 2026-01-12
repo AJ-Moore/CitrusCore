@@ -11,6 +11,16 @@ namespace CitrusCore
 		return std::clamp(a + t * (b - a), 0.0f , 1.0f);
 	}
 
+	float Math::MoveTowards(float a, float b, float maxDelta)
+	{
+		if (a < b)
+		{
+        	return std::min(a + maxDelta, b);
+		}
+		
+		return std::max(a - maxDelta, b);
+	}
+
 	float Math::SmoothLerp(float a, float b, float t, float f = 1)
 	{
 		return (1 - std::cos(Math::PI * Math::Lerp(a, b, t) * f)) * 0.5f;

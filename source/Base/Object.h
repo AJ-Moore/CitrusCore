@@ -1,9 +1,8 @@
 #pragma once
 
-#include "CCCommon.h"
-#include "Util/Property.h"
+#include <CCCommon.h>
+#include <Util/Property.h>
 #include <Util/UID.h>
-#include <cstddef>
 #include <memory>
 #include <nameof.hpp>
 #include <unordered_map>
@@ -18,7 +17,7 @@ namespace CitrusCore
 		virtual ~Object(){}
 		void SetName(const std::string& name) { m_name = name; }
 		const std::string& GetName() const { return m_name; }
-		const UID GetUID() const { return m_uid; }
+		const UID& GetUID() const { return m_uid; }
 
 		template <class T, class FieldType, FieldType T::* member>
 		void RegisterProperty(std::unique_ptr<PropertyBase> property, FieldType T::* classProp);
@@ -140,7 +139,7 @@ namespace CitrusCore
 		constexpr PropertyDefinition() : PropertyDefinitionBase(ReadOnly){}
 		constexpr bool IsReadOnly() const { return m_readOnly; }
 
-		PropertyDefinition(const T& initial) : PropertyDefinitionBase(ReadOnly), m_value(initial) {}
+		constexpr PropertyDefinition(const T& initial) : PropertyDefinitionBase(ReadOnly), m_value(initial) {}
 	
 		operator const T&() const { return m_value; }
 	
@@ -155,7 +154,11 @@ namespace CitrusCore
 	};
 
 	template <class T, bool ReadOnly = false>
-	class CITRUS_CORE_API ReadOnlyPropertyDefinition : public PropertyDefinition<T, ReadOnly>, public IPropReadOnly{};
+	class CITRUS_CORE_API ReadOnlyPropertyDefinition : public PropertyDefinition<T, ReadOnly>, public IPropReadOnly{
+	public:
+		constexpr ReadOnlyPropertyDefinition() = default;
+		constexpr ReadOnlyPropertyDefinition(const T& v) : PropertyDefinition<T, ReadOnly>(v) {}
+	};
 
 	template <class T>
 	using Property = PropertyDefinition<T, false>;

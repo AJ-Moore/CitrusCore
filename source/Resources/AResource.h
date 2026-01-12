@@ -1,11 +1,12 @@
 #pragma once
 
 //#include "Resources/ResourceHandle.h"
+#include <Base/Object.h>
 #include <CCCommon.h>
 
 namespace CitrusCore
 {
-	class CITRUS_CORE_API AResourceBase{
+	class CITRUS_CORE_API AResourceBase : public Object{
 	public:
 		virtual bool LoadResource(std::string path) = 0;
 		virtual void UnloadResource() = 0;
