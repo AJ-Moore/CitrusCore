@@ -8,5 +8,6 @@ namespace CitrusCore
 	public:
         virtual ~IRenderable() = default;
 		virtual void Render() = 0;
+		virtual void BeginRender(){};
 	};
 }

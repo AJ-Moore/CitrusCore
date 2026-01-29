@@ -25,6 +25,7 @@ namespace CitrusCore
 		virtual void Unload() override = 0;
 		virtual void Update() override = 0;
 		virtual void Render() override = 0;
+		virtual void BeginRender() override{};
 
 		bool m_bDoneInit = false;
 	};
