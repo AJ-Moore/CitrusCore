@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Interface/ISerialisable.h"
-#include "Interface/ITimestampProvider.h"
+#include <Interface/ISerialisable.h>
+#include <Interface/ITimestampProvider.h>
 #include <Base/Object.h>
 #include <CCCommon.h>
 #include <glm/fwd.hpp>
@@ -112,8 +112,8 @@ namespace CitrusCore
 		/// Event broadcaster, listeners called when transform is updated.
 		Event<Transform*> OnTransformChanged;
 
-		virtual void Serialise(ByteStream& byteStream) override;
-        virtual void Deserialise(ByteStreamReader& byteStream) override;
+		virtual void Serialise(StreamWriter& byteStream) override;
+        virtual void Deserialise(StreamReader& byteStream) override;
 
 	protected:
 		/// Calculates the local transformation matrix from the position, rotation and scale

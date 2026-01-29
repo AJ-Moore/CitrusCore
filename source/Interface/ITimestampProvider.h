@@ -1,6 +1,6 @@
 #pragma once 
 
-#include "CCCommon.h"
+#include <CCCommon.h>
 namespace CitrusCore 
 {
     class CITRUS_CORE_API ITimestampProvider {

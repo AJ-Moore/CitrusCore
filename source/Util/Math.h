@@ -7,6 +7,7 @@ namespace CitrusCore {
 	public: 
 		static double PI;
 		static float Lerp(float a, float b, float t);
+		static float MoveTowards(float a, float b, float maxDelta);
 		static float SmoothLerp(float a, float b, float t, float f);
 		static float SmoothLerpTowards(float a, float b, float maxDelta, float f);
 		static glm::vec3 Lerp(glm::vec3 a, glm::vec3 b, float t);

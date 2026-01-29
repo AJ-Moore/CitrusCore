@@ -38,7 +38,7 @@ namespace CitrusCore
 	{
 		m_resource = std::static_pointer_cast<T>(std::make_shared<P>());
 		AResource<T>* resource = static_cast<AResource<T>*>(GetResource());
-		resource->LoadResource(m_path);
+		m_bLoaded = resource->LoadResource(m_path);
 	}
 
 	template<class T>
