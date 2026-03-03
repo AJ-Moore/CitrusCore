@@ -56,4 +56,12 @@ namespace CitrusCore{
             service.second->BeginRender();
         }
     }
+
+    void Services::RenderUI() 
+    {
+        for (auto& service : m_services)
+        {
+            service.second->RenderUI();
+        }
+    }
 }

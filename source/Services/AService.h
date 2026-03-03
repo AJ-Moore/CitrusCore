@@ -17,7 +17,7 @@ namespace CitrusCore
 		friend class Services;
 	public:
         AService() = default;
-        ~AService() = default; 
+        virtual ~AService() = default; 
 
 		bool HasbeenInitialised() const { return m_bDoneInit; }
 	protected:
@@ -26,6 +26,7 @@ namespace CitrusCore
 		virtual void Update() override = 0;
 		virtual void Render() override = 0;
 		virtual void BeginRender() override{};
+		virtual void RenderUI(){};
 
 		bool m_bDoneInit = false;
 	};

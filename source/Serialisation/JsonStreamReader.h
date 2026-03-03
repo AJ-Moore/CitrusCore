@@ -19,14 +19,25 @@ namespace CitrusCore
         virtual bool BeginReadArray(const std::string& key) override;
         virtual void EndReadArray() override;
 
+        virtual bool ReadArrayIndex(uint32_t index) override;
+        virtual bool ReadNextArrayIndex() override;
+
+        virtual uint32_t ReadUnsigned(const std::string& key, uint32_t defaultValue = 0) override;
+        virtual int32_t ReadSigned(const std::string& key, int32_t defaultValue = 0) override;
         virtual float ReadFloat(const std::string& key, float defaultValue) override;
         virtual bool ReadBool(const std::string& key, bool defaultValue) override;
         virtual std::string ReadString(const std::string& key, const std::string& defaultValue) override;
+
+        template <class T> 
+        T Read(const std::string& key)
+        {
+            GetActiveObject().get<T>(key);
+        }
     private:
         nlohmann::json& GetActiveObject();
 
         std::shared_ptr<nlohmann::json> m_json;
         std::stack<nlohmann::json*> m_readStack;
-        std::stack<nlohmann::json*> m_arrayStack;
+        int32_t m_arrayIndex = 0;
     };
 }

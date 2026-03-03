@@ -1,7 +1,8 @@
-
+#pragma once
 #include <CCCommon.h>
 #include <Serialisation/Stream.h>
 #include <nlohmann/json.hpp>
+#include <stack>
 
 
 namespace CitrusCore 
@@ -11,13 +12,24 @@ namespace CitrusCore
     class CITRUS_CORE_API JsonStreamWriter : public StreamWriter
     {
     public:
-        virtual void WriteString(std::string value) = 0;
-        virtual void WriteBool(bool value) = 0;
-        virtual void WriteFloat(float value) = 0;
-        virtual void WriteUnsigned(uint64 value) = 0;
-        virtual void WriteSigned(sint64 value) = 0;
+        virtual void BeginObject(const std::string& key);
+        virtual void EndObject(); 
+
+        virtual void BeginArray(const std::string& key);
+        virtual void EndArray();
+
+        virtual void Write(const std::string& key, std::string value);
+        virtual void Write(const std::string& key, bool value);
+        virtual void Write(const std::string& key, float value);
+        virtual void Write(const std::string& key, uint64 value);
+        virtual void Write(const std::string& key, sint64 value);
+        virtual void Write(const std::string& key, json json);
+
+        const json& GetJson() const { return m_json; }
 
     private:
+        nlohmann::json& GetActiveObject();
+        std::stack<nlohmann::json*> m_writeStack;
         json m_json;
     };
 }

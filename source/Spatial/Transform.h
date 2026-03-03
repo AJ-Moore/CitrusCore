@@ -97,9 +97,6 @@ namespace CitrusCore
 		/// Returns the parent transform of this transform, or nullptr if not set
 		Transform* GetParentTransform() const;
 
-		/// Returns the entity this transform is associated with
-		// Entity* GetParentEntity() const { return m_entity; }
-
 		/// Does this transform have any children 
 		const bool HasChildren() const { return !m_children.empty(); }
 
@@ -155,9 +152,6 @@ namespace CitrusCore
 
 		/// The parent transform, nullptr if a parent is not present
 		Transform* m_parent = nullptr;
-
-		/// The entity this transform is attached to.
-		//Entity* m_entity = nullptr;
 
 		static std::shared_ptr<ITimestampProvider> m_timestampProvider;
 

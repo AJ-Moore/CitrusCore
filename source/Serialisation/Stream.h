@@ -1,5 +1,6 @@
 #pragma once
 
+#include <nlohmann/json.hpp>
 #include <CCCommon.h>
 
 namespace CitrusCore 
@@ -17,10 +18,14 @@ namespace CitrusCore
 
         virtual bool BeginReadArray(const std::string& key) = 0;
         virtual void EndReadArray() = 0;
+        virtual bool ReadArrayIndex(uint32_t index) = 0;
+        virtual bool ReadNextArrayIndex() = 0;
 
-        virtual float ReadFloat(const std::string& key, float defaultValue) = 0;
-        virtual bool ReadBool(const std::string& key, bool defaultValue) = 0;
-        virtual std::string ReadString(const std::string& key, const std::string& defaultValue) = 0;
+        virtual uint32_t ReadUnsigned(const std::string& key, uint32_t defaultValue = 0) = 0;
+        virtual int32_t ReadSigned(const std::string& key, int32_t defaultValue = 0) = 0;
+        virtual float ReadFloat(const std::string& key, float defaultValue = 0) = 0;
+        virtual bool ReadBool(const std::string& key, bool defaultValue = false) = 0;
+        virtual std::string ReadString(const std::string& key, const std::string& defaultValue = "") = 0;
     };
 
     class CITRUS_CORE_API StreamWriter : public Stream
@@ -37,5 +42,6 @@ namespace CitrusCore
         virtual void Write(const std::string& key, float value) = 0;
         virtual void Write(const std::string& key, uint64 value) = 0;
         virtual void Write(const std::string& key, sint64 value) = 0;
+        virtual void Write(const std::string& key, nlohmann::json json) = 0;
     };
 }

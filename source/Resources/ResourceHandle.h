@@ -3,14 +3,20 @@
 #include <Resources/AResource.h>
 #include <CCCommon.h>
 #include <memory>
+#include <string>
 
 namespace CitrusCore
 {
 	template<class T> 
 	class ResourceGroup;
 
+	class CITRUS_CORE_API ResourceHandleBase{
+	public:
+		virtual const std::string& GetPath () const = 0;
+	};
+
 	template <class T>
-	class CITRUS_CORE_API ResourceHandle
+	class CITRUS_CORE_API ResourceHandle : ResourceHandleBase
 	{
 		static_assert(std::is_base_of<AResource<T>, T>::value, 
 			"T must derive from AResource");
@@ -19,6 +25,8 @@ namespace CitrusCore
 		ResourceHandle() = delete;
 		ResourceHandle(std::string path) { m_path = path; }
 		T* GetResource() { return m_resource.get(); }
+
+		virtual const std::string& GetPath () const override { return m_path; }
 	protected:
 		template<class P>
 		void Load(); 

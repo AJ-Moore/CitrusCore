@@ -32,6 +32,7 @@ namespace CitrusCore
 		virtual void Update();
 		virtual void Render();
 		virtual void BeginRender();
+		virtual void RenderUI();
 
 		std::queue<std::shared_ptr<AService>> m_awaitingInitialisation;
 		std::unordered_map<UID, std::shared_ptr<AService>> m_services;
