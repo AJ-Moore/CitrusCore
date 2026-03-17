@@ -55,6 +55,9 @@ namespace CitrusCore
 		/// Get the position of the transform relative to its parent, in local space
 		glm::vec3 GetPosition();
 
+		/// Get the scale attribute of the transform.
+		glm::vec3 GetScale();
+
 		/// Get the position of the transform in 2d space relative to its parent
 		glm::vec2 GetPosition2d();
 
@@ -87,7 +90,7 @@ namespace CitrusCore
 
 		void SetLocal(glm::mat4 mat);
 
-		glm::mat4 GetLocal();
+		glm::mat4& GetLocal();
 
 		static void MakeParent(std::shared_ptr<Transform> transform, std::shared_ptr<Transform> parent);
 

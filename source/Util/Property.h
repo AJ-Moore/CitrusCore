@@ -1,7 +1,10 @@
 #pragma once 
 
-//#include <Serialisation/Stream.h>
-#include "Util/Logger.h"
+#include <Util/PropertyBase.h>
+#include <Base/IPropertyRenderer.h>
+#include <Base/PropertyDefinitionBase.h>
+#include <Reflection/Reflect.h>
+#include <Util/Logger.h>
 #include <Base/MemberTraits.h>
 #include <Serialisation/JsonStreamWriter.h>
 #include <Interface/ISerialisable.h>
@@ -10,7 +13,6 @@
 #include <nameof.hpp>
 #include <string>
 #include <type_traits>
-#include <typeindex>
 
 namespace CitrusCore 
 {
@@ -61,28 +63,15 @@ namespace CitrusCore
     struct is_smart_pointer_impl<std::unique_ptr<T>> : std::true_type {};
 
     template <typename T>
-    struct is_smart_pointer : is_smart_pointer_impl<std::remove_cv_t<std::remove_reference_t<T>>> {};
+    struct is_smart_pointer : is_smart_pointer_impl<std::remove_cvref_t<T>> {};
 
-    class CITRUS_CORE_API PropertyBase : ISerialisable
-    {
-    public:
-        ~PropertyBase() = default;
-        PropertyBase() = default;
-        virtual void Serialise(StreamWriter& byteStream) override {}
-        virtual void Deserialise(StreamReader& byteStream) override {}
-        bool IsReadOnly() const { return m_bReadOnly; }
-    protected:\
-        std::string m_propertyName;
-        std::string m_typeName;
-        bool m_bReadOnly = true;  
-        std::type_index m_type;
-    };
+    class PropertyDefinitionBase;
 
     template <class Base, class FieldType, FieldType Base::* Member>
     class CITRUS_CORE_API PropertyBaseT : public PropertyBase
     {
     public:
-        PropertyBaseT(Base* baseClass, FieldType Base::* member)
+        PropertyBaseT(Base* baseClass, FieldType Base::* member) //: APropertyRenderer(this)
         {
             using fieldTrait = typename CitrusCore::MemberTraits<decltype(Member)>::field_type;
             m_propertyName = std::string(member_name<Member>);
@@ -196,9 +185,31 @@ namespace CitrusCore
             }
             stream.EndObject();
         }
+
+        virtual void RenderUI(IPropertyRenderer& renderer) override
+        {
+            PropertyDefinitionBase* base = GetPropertyBase();
+
+            if (base != nullptr)
+            {
+                base = static_cast<PropertyDefinitionBase*>(&(m_obj->*m_property));
+                base->RenderUI(this, renderer);
+            }
+        }
     protected:
         Base* m_obj = nullptr;
         FieldType Base::* m_property;
+        uint32_t m_fieldId;
+    private: 
+        virtual PropertyDefinitionBase* GetPropertyBase() override
+        {
+            if constexpr (std::is_base_of_v<PropertyDefinitionBase, FieldType>)
+            {
+                return &(m_obj->*m_property);
+            }
+
+            return nullptr;
+        }
     };
 
     template <class FieldType>
@@ -212,7 +223,9 @@ namespace CitrusCore
     {
     public:
         ~PropertyT() = default;
-        PropertyT(Base* baseClass, FieldType Base::* member) : PropertyBaseT<Base, FieldType, Member>(baseClass, member){}
+        PropertyT(Base* baseClass, FieldType Base::* member) : PropertyBaseT<Base, FieldType, Member>(baseClass, member){
+            this->m_bReadOnly = false;
+        }
         virtual void Set(FieldType& value) override { this->m_obj->*this->m_property = value;}
     };
 

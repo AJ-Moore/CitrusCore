@@ -1,13 +1,18 @@
 #pragma once
 
+#include <Base/IPropertyRenderer.h>
+#include <Base/PropertyDefinitionBase.h>
+#include <Reflection/Reflect.h>
 #include <Interface/ISerialisable.h>
 #include <Serialisation/Stream.h>
 #include <Util/Logger.h>
 #include <CCCommon.h>
 #include <Util/Property.h>
 #include <Util/UID.h>
+#include <glm/fwd.hpp>
 #include <memory>
 #include <nameof.hpp>
+#include <type_traits>
 #include <unordered_map>
 #include <utility>
 #include <ranges>
@@ -72,15 +77,6 @@ namespace CitrusCore
     {
         m_properties[nameof::nameof_member(classProp)] = property;
     }
-
-	class CITRUS_CORE_API IPropReadOnly{};
-	class CITRUS_CORE_API PropertyDefinitionBase{
-	protected:
-		bool m_readOnly = false;
-	public:
-		constexpr PropertyDefinitionBase(bool readOnly) : m_readOnly(readOnly) {}
-		constexpr bool IsReadOnly() const { return m_readOnly; }
-	};
 
 	/// Property must be registered in m_properties to work, additional lookup cost.
 	template <auto Member>
@@ -155,10 +151,13 @@ namespace CitrusCore
 		constexpr bool IsReadOnly() const { return m_readOnly; }
 
 		// Copy constructor
-		constexpr PropertyDefinition(const T& initial) : PropertyDefinitionBase(ReadOnly), m_value(initial) {}
+		constexpr PropertyDefinition(const T& initial) : PropertyDefinitionBase(ReadOnly), m_value(initial) {
+			m_typeId = TypeToId<T>().Id;
+		}
 
 		// Move constructor
 		constexpr PropertyDefinition(T&& initial) : PropertyDefinitionBase(ReadOnly), m_value(std::move(initial)) {
+			m_typeId = TypeToId<T>().Id;
 		}
 	
 		operator const T&() const { return m_value; }
@@ -173,7 +172,40 @@ namespace CitrusCore
 		}
 	
 		const T& Get() const { return m_value; }
+		TypeID GetTypeId() const { return m_typeId; }
 		void Set(const T& newValue) { *this = newValue; }
+
+		virtual void RenderUI(PropertyBase* property, IPropertyRenderer& renderer) override
+		{
+			if constexpr (is_smart_pointer<T>::value)
+            {
+				using fieldBareType = pointer_traits_element_t<T>;
+
+				if constexpr (std::is_integral_v<fieldBareType> ||
+					std::is_same_v<fieldBareType, bool> ||
+					std::is_same_v<fieldBareType, float> ||
+					std::is_same_v<fieldBareType, double> ||
+					std::is_same_v<fieldBareType, glm::vec3> || 
+					std::is_same_v<fieldBareType, glm::mat4> ||
+					std::is_same_v<fieldBareType, Transform> ||
+					std::is_base_of_v<Transform, fieldBareType>
+				) {
+					renderer.Draw(property, *m_value);
+				}
+			}
+
+			if constexpr (std::is_integral_v<T> ||
+				std::is_same_v<T, bool> ||
+				std::is_same_v<T, float> ||
+				std::is_same_v<T, double> ||
+				std::is_same_v<T, glm::vec3> || 
+				std::is_same_v<T, glm::mat4> ||
+				std::is_same_v<T, Transform> ||
+				std::is_base_of_v<Transform, T>
+			) {
+				renderer.Draw(property, m_value);
+			}
+		}
 
 		virtual void Deserialise(StreamReader& stream) override
 		{
@@ -275,6 +307,7 @@ namespace CitrusCore
 		}
 	private:
 		T m_value;
+		TypeID m_typeId;
 	};
 
 	template <class T, bool ReadOnly = false>
@@ -284,7 +317,7 @@ namespace CitrusCore
 		constexpr ReadOnlyPropertyDefinition(const T& v) : PropertyDefinition<T, ReadOnly>(v) {}
 	};
 
-	template <class T>
+	template <class T, typename... Traits>
 	using Property = PropertyDefinition<T, false>;
 
 	template <class T>

@@ -2,7 +2,6 @@
 
 #include <CCCommon.h>
 #include <string>
-#include <cstdarg>
 
 namespace CitrusCore
 {
