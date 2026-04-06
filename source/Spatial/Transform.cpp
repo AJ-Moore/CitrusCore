@@ -1,4 +1,4 @@
-#include "Serialisation/Stream.h"
+#include <Serialisation/Stream.h>
 #include <Interface/ITimestampProvider.h>
 #include <Spatial/Transform.h>
 #include <memory>
@@ -92,6 +92,11 @@ namespace CitrusCore
 		return m_position; 
 	}
 
+	glm::vec3 Transform::GetScale() 
+	{
+		return m_scale;
+	}
+
 	glm::vec2 Transform::GetPosition2d()
 	{
 		return glm::vec2(m_position);
@@ -154,7 +159,7 @@ namespace CitrusCore
 		m_rotation = glm::quat_cast(m_localTransform);
 	}
 
-	glm::mat4 Transform::GetLocal()
+	glm::mat4& Transform::GetLocal()
 	{
 		UpdateGlobalTransform();
 		return m_localTransform;
@@ -162,6 +167,11 @@ namespace CitrusCore
 
 	void Transform::MakeParent(std::shared_ptr<Transform> transform, std::shared_ptr<Transform> parent)
 	{
+		if (transform->GetParentTransform() != nullptr)
+		{
+			transform->GetParentTransform()->RemoveChild(transform.get());
+		}
+
 		parent->m_children.push_back(transform);
 		parent->m_bDirty = true;
 		transform->m_parent = parent.get();

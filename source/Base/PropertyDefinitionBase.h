@@ -1,6 +1,7 @@
 #pragma once
 #include <Base/IPropertyRenderer.h>
 #include <CCCommon.h>
+#include <Events/Event.h>
 
 namespace CitrusCore
 {

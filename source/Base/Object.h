@@ -164,6 +164,7 @@ namespace CitrusCore
 	
 		void operator=(const T& newValue) {
 			m_value = newValue;
+			OnChange.Invoke(m_value);
 		}
 
 		// Move
@@ -305,6 +306,8 @@ namespace CitrusCore
 				stream.Write("Value", json(m_value));
             }
 		}
+
+		Event<T> OnChange;
 	private:
 		T m_value;
 		TypeID m_typeId;

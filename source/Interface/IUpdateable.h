@@ -8,5 +8,6 @@ namespace CitrusCore
 	public:
         virtual ~IUpdateable() = default;
 		virtual void Update() = 0;
+		virtual void LateUpdate(){}
 	};
 }

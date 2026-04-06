@@ -15,7 +15,6 @@ namespace CitrusCore {
 
         std::string GetPropertyName() const { return m_propertyName; }
         virtual void RenderUI(IPropertyRenderer& renderer) = 0;
-
         virtual PropertyDefinitionBase* GetPropertyBase() = 0;
     protected:
         std::string m_propertyName;
